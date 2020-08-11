@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import List from './List'
 import { connect } from "react-redux"
 import AddButton from "./AddButton"
@@ -7,16 +7,16 @@ import { sort } from "../actions"
 import { ListContainerA, AppHeader } from "./styles"
 
 
-class App extends Component {
+const App = props => {
 
-  onDragEnd = result => {
+  const onDragEnd = result => {
     const { destination, source, draggableId, type } = result
 
     if (!destination) {
       return
     }
 
-    this.props.dispatch(sort(
+    props.dispatch(sort(
       source.droppableId,
       destination.droppableId,
       source.index,
@@ -26,10 +26,11 @@ class App extends Component {
     ))
   }
 
-  render() {
-    const { lists } = this.props
+
+    const { lists } = props
+    
     return (
-      <DragDropContext onDragEnd={this.onDragEnd}>
+      <DragDropContext onDragEnd={onDragEnd}>
         <div className="App">
           <AppHeader>List Creator</AppHeader>
           <Droppable droppableId="lists-wrapper" direction="horizontal" type="list">
@@ -46,7 +47,7 @@ class App extends Component {
         </div>
       </DragDropContext>
     );
-  }
+  
 }
 
 const mapStateToProps = state => ({

@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { useState } from 'react'
 import Textarea from "react-textarea-autosize"
 import Icon from "@material-ui/core/Icon"
 import Card from '@material-ui/core/Card';
@@ -6,59 +6,71 @@ import Button from '@material-ui/core/Button'
 import { connect } from "react-redux"
 import { addList, addCard } from "../actions"
 
-class AddButton extends Component {
+const AddButton = props => {
+  // const [state, setState] = useState({
+  //   formOpen: false
+  // })
+  
+  const [formOpen, setFormOpen] = useState(false)
+  const [formText, setFormText] = useState('')
 
-  state = {
-    formOpen: false
+  const openForm = () => {
+    setFormOpen(true)
+    // setState({
+    //   ...state,
+    //   formOpen: true
+    // })
   }
 
-  openForm = () => {
-    this.setState({
-      formOpen: true
-    })
+  const closeForm = (e) => {
+    setFormOpen(false)
+    // setState({
+    //   ...state,
+    //   formOpen: false
+    // })
   }
 
-  closeForm = (e) => {
-    this.setState({
-      formOpen: false
-    })
+  const handleInputChange = e => {
+    setFormText({text: e.target.value})
+    // setState({
+    //   ...state,
+    //   text: e.target.value
+    // })
   }
 
-  handleInputChange = e => {
-    this.setState({
-      text: e.target.value
-    })
-  }
-
-  handleAddList = () => {
-    const { dispatch } = this.props
-    const { text } = this.state
+  const handleAddList = () => {
+    const { dispatch } = props
+    const { text } = formText
 
     if (text) {
-      this.setState({
-        text:""
-      })
+      setFormText('')
+      // setState({
+      //   ...state,
+      //   text:""
+      // })
       dispatch(addList(text))
     }
     return
   }
 
-  handleAddCard = () => {
-    const { dispatch, listID } = this.props
-    const { text } = this.state
+  const handleAddCard = () => {
+    const { dispatch, listID } = props
+    const { text } = formText
 
     if (text) {
-      this.setState({
-        text:""
-      })
+      setFormText('')
+      // setState({
+      //   ...state,
+      //   text:""
+      // })
       dispatch(addCard(listID, text))
     }
     return
 
   }
 
-  renderAddButton = () => {
-    const { list } = this.props
+  const renderAddButton = () => {
+    const { list } = props
     const buttonText = list ? "add list" : "add card"
     const buttonTextOpacity = list ? 1 : 0.5
     const buttonTextColor = list ? "white" : "inherit"
@@ -66,7 +78,7 @@ class AddButton extends Component {
 
     return (
       <div
-        onClick={this.openForm}
+        onClick={openForm}
         style={{
           ...styles.addButtonStyle,
           opacity: buttonTextOpacity,
@@ -79,8 +91,8 @@ class AddButton extends Component {
     )
   }
 
-  renderForm = () => {
-    const { list } = this.props
+  const renderForm = () => {
+    const { list } = props
     const placeholder = list ? "list title..." : "card text..."
     const buttonTitle = list ? "Add List" : "Add Card"
 
@@ -98,9 +110,9 @@ class AddButton extends Component {
         <Textarea
           placeholder={placeholder}
           autoFocus
-          onBlur={this.closeForm}
-          value={this.state.text}
-          onChange={this.handleInputChange}
+          onBlur={closeForm}
+          value={formText.text}
+          onChange={handleInputChange}
           style={{
             overflow: "hidden",
             resize: "none",
@@ -112,21 +124,21 @@ class AddButton extends Component {
       </Card>
       <div style={styles.formButtonGroup}>
         <Button
-          onMouseDown={ list ? this.handleAddList : this.handleAddCard}
+          onMouseDown={ list ? handleAddList : handleAddCard}
           variant="contained"
           style={{ color: "white", backgroundColor: "#C7B097" }}
         >
           {buttonTitle}
         </Button>
-        <Icon style={{ marginLeft: 8, cursor: "pointer" }}>close</Icon>
+        <Icon onClick={closeForm} style={{ marginLeft: 8, cursor: "pointer" }}>close</Icon>
       </div>
     </div>
   }
 
-  render() {
-    return this.state.formOpen === true ? this.renderForm() : this.renderAddButton()
 
-  }
+  return formOpen === true ? renderForm() : renderAddButton()
+
+  
 }
 
 const styles = {

@@ -30,12 +30,10 @@ const ListsReducer = (state = initialState, action) => {
       //Not working correctly - card is deleted from state but page does not re-render
       const { index, listID } = action.payload
       const newState = state
-      const list = state.find(list => list.id === listID)
-      list.cards.splice(index, 1)
+      newState.find(list => list.id === listID).cards.splice(index, 1)
 
-      //console.log(list)
       console.log(newState)
-      return newState
+      return [...newState]
       
     }
     
