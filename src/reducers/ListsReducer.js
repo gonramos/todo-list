@@ -27,12 +27,10 @@ const ListsReducer = (state = initialState, action) => {
 
     case CONSTANTS.DELETE_CARD: {
 
-      //Not working correctly - card is deleted from state but page does not re-render
       const { index, listID } = action.payload
       const newState = state
       newState.find(list => list.id === listID).cards.splice(index, 1)
-
-      //console.log(newState)
+      
       return [...newState]
       
     }
