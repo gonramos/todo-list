@@ -43,4 +43,8 @@ const List = ({ title, cards, listID, index, dispatch }) => {
   )
 }
 
-export default connect()(List)
+const mapStateToProps = state => ({
+  lists: state.lists
+})
+
+export default connect(mapStateToProps)(List)

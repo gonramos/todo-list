@@ -32,7 +32,7 @@ const ListsReducer = (state = initialState, action) => {
       const newState = state
       newState.find(list => list.id === listID).cards.splice(index, 1)
 
-      console.log(newState)
+      //console.log(newState)
       return [...newState]
       
     }

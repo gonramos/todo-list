@@ -10,7 +10,7 @@ import { deleteCard } from "../actions"
 
 const CardItem = ({ text, id, listID, index, dispatch }) => {
 
-  const handleDeleteCard = e => {
+  const handleDeleteCard = () => {
     //console.log(listID + " " + id)
     dispatch(deleteCard(index, listID));
   }
