@@ -1,4 +1,4 @@
-## Simple List Creator
+## Simple List Creator with draggable elements
 ### A basic organizer for your tasks, shopping lists, etc...
 
 Using
